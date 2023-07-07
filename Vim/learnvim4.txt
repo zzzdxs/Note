@@ -1,0 +1,116 @@
+13 全局操作
+
+:[range]g/pattern/command  传递范围参数[行数]
+:g!/pattern/command :v/pattern/command  逆向匹配
+:g/./normal A;   普通模式命令
+:g/./normal @a   执行宏命令
+:g/./v/xxx/d :g/./g/xxx/d   递归全局命令 上次结果是下次范围
+p.s. .-非空行 ^-所有行
+command为空时默认打印:p
+:g/pattern1/,/pattern2/command
+:h :j   :h :sort
+
+14 外部命令
+
+:r !{cmd}  将外部命令的STDOUT存入Vim
+:!cmd 执行外部命令
+.! 在当前行执行filter命令
+%！在所有行执行filter命令
+:h awk
+Bang命令
+
+15 命令行模式
+
+搜索【? /】指令【:】外部【!】
+重复上一个@:
+命令行历史记录:his :      q:
+:h ex-cmd-index
+
+16 标签
+
+17 折叠
+
+zf折叠操作符+nj动作
+zo展开已折叠 zc关闭/收缩文本
+可视模式下 选中折叠文本 再zf
+zfip折叠内部段落；zfG折叠至文件末尾；zfa{折叠{}之间文本
+:,+1flod 范围+fold
+zR展开所有折叠 zM收缩所有折叠 za切换折叠状态
+:h fold-command
+
+缩进折叠 :set foldmethod=indent  [:set shiftwidth=n]
+表达式   :set foldmethod=expr    [:set foldexpr=getline(v:lnum)[0]==\\"p\\"]
+语法     :set foldmethod=syntax  [vim-ployglot]
+差异     vimdiff file1.txt file2.txt
+标志     :set foldmethod=marker  [:set foldmarker=...]
+当关闭 Vim 会话后，您将失去所有的折叠信息
+要在折叠后保留它们，可以运行：:mkview
+
+18 Git
+
+vim file1.txt file2.txt
+[c   ]c
+:diffput :diffget
+
+合并冲突
+git init
+git config merge.tool vimdiff
+git config merge.conflictstyle diff3
+git config mergetool.prompt false
+git merge xxx报错：
+git mergetool
+:diffget LOCAL/BASE/REMOTE
+
+:Git -/s/u/>/<
+:Git blame q/A/C/D
+:Gdiffsplit 
+:Gwrite ~git add <current-file>
+:Gread  ~git checkout <current-file> 搭配u使用
+:Gclog  ~git log :cnext/:cprevious/:copen/:cclose
+:h fugitive.txt
+
+19 编译
+
+:!xxx
+:make
+:set makeprg?  :set makeprg=xxx
+:h :compiler
+:copen 查看error
+保存时自动编译 :autocmd BufWritePost *.cpp make
+
+
+20 视图 会话 Viminfo
+
+单个窗口的映射折叠————视图
+
+折叠zfxj :1,2 fold
+:set viewoptions?
+:set viewoptions+=localoptions
+:mkview  //保存
+:set viewdir?  //查询保存位置
+:set viewdir=xxx/xxx
+再次打开文件：:loadview
+:mkview 1  :loadview 1
+:mkview 2  :loadview 2
+...
+.vimrc 自动创建/显示视图
+autocmd BufWinLeave *.txt mkview
+autocmd BufWinEnter *.txt silent loadview
+
+多个窗口布局————会话
+
+:vsplit xxx  横向分割
+:split xxx  纵向分割
+Ctrl-w-w 循环切换窗口
+Ctrl-w-h/j/k/l 切换窗口
+Ctrl-w-c/q  关闭窗口
+:mksession 保存会话
+会话存放位置  Session.vim
+:mksession xxx/xxx/xxx.vim
+:source Session.vim 加载会话
+vim -S Session.vim
+
+:set sessionoptions? 会话存储的属性
+
+Viminfo
+

@@ -1,0 +1,93 @@
+vim file1 ...
+i/a/A
+<esc>
+:w :q :qa :h xxx
+
+文档内移动
+x-h/j/k/l
+Ctrl-d/Ctrl-u
+$/0 H/L w
+
+多文件
+:edit file2  :bnext  :bprev  :buffers
+:tabnew file3  gt :tabnext/previous/first/last
+vim -p file1 file2 file3
+:split file3  :vsplit file4  Ctrl-w-h/j/k/l
+Ctrl-w-V/S/C/O[新建/关闭窗口]
+vim -o/-O file3 file4
+
+[文件内查找] 
+/xxx n N
+^xxx xxx$ 'xxx xxx|yyy xxx!yyy
+:vimgrep/:vim /pattern/ file
+:copen Ctrl-n/N<enter>
+:cnext :cprevious .. :cclose
+
+[查找文件]
+--Netrw
+[.vimrc:]set nocp \  filetype plugin on
+vim <path>
+:Explore/:E :Sexplore/:Sex :Vexplore/:Vex
+<enter>
+:bnext
+% d R D [创建文件/目录/重命名/删除]
+--Fzf
+:Files
+<enter>
+
+[operator]
+y d c gu gU u [Ctrl-G u]
+mx `x 'x[mark]
+
+[insert]
+Ctrl-o+zz/H/M/L/'x...operator
+
+[register in command]
+qa...q @a
+
+.[copy operator]
+
+[fold]
+Ctrl-v+[hjkl...]+zf
+:[range]fold
+zR zM za zo
+
+[increase]
+Ctrl-v+[..]+g+Ctrl-A/X
+:set nrformats+=alpha
+
+[rename] 终端mv -i xxx.txt newxxx
+:w newname[另存为]
+-->[Netrw :E R]
+
+[replace]
+:[range]%s/pattern/command
+
+[sort] Ctrl-v+:sort
+[undo]:undo/u  :late
+[外部命令]:!command
+
+[Git]
+git init
+git config merge.tool vimdiff
+git config merge.conflictstyle diff3
+git config mergetool.prompt false
+[合并新分支前旧分支有了新更新]
+:!git merge xxx
+:!git mergetool
+:diffget LOCAL/BASE/REMOTE
+:wqall
+git branch -d xxx
+
+[make]
+
+[win tap viminfo]
+win--:set viewoptions+=localoptions
+     :mkview x
+     :loadview x
+tap--:mksession
+     :mksession <elsepath> / :mksession! <edpath>
+     :source Session.vim / vim -S Session.vim
+
+自定义脚本 VIMRUNTIME
+自定义.vimrc

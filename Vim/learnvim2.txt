@@ -1,0 +1,92 @@
+3 打开和搜索文件
+
+* 善用<Tab>
+:edit <name>
+:edit *.c <Tab>查看当前目录下所有.c文件
+:edit . /:edit <../././> 查看当前文件夹ls
+
+:find <././name> 查找并打开的路径范围 :set path?
+添加查找范围：:set path+=<./././**> **自动补全
+
+查找文件内词语 使用grep
+:vim /pattern/ file
+:copen        打开quickfix窗口
+:cclose       关闭quickfix窗口
+:cnext        跳到下一个错误
+:cprevious    跳到前一个错误
+:colder       跳到旧的错误列表
+:cnewer       跳到新的错误列表
+
+:grep -R "pattern" <././name>
+
+基础netrw:
+终端打开 vim+目录参数
+vim内打开 :edit+目录参数
+不传递目录参数：
+:Explore     从当前文件启动netrw。
+:Sexplore    Sex_Plore?不是开玩笑:)，在顶部水平分割的窗口打开netrw。
+:Vexplore    在左侧垂直分割的窗口打开netrw。
+
+Fzf
+#安装fzf和ripgrep
+#安装vim-plug
+#安装插件fzf fzf.vim
+
+fzf语法：
+^前缀精准匹配 ^xxx:以xxx开头的短语
+$后缀精准匹配 xxx$:以xxx结尾的短语
+'精准匹配 'xxx':搜索短语xxx
+|或者匹配 xxx|yyy:搜索xxx或yyy
+!反向匹配 xxx!yyy:包含xxx而不含yyy的短语
+可以混合使用
+
+
+在项目中替换所有匹配项
+:grep "xxx"
+:cfdo %s/xxx/yyy/g | update
+或
+:%db | e#
+:Files
+xxx#搜索替换文件
+:bufdo %s/pizza/donut/g | update
+
+
+4 Vim语法----------------------------------------------
+
+h-左 j-下 k-上 l-右 w-跳到下个单词 }-跳转下个段落 $-跳转行末
+y-复制 d-删除 c-删除文本，将删除的文本存到寄存器，进入插入模式change
+p-粘贴y复制的内容
+删除括号内容 di(/da(   (从外向内数到光标所在层，光标不在括号内则删除最外层
+
+5 文件内移动
+
+设置相对行数，利用vim命令直接跨越多行、转到词组、、
+相对行数n+j/k 下移/上移
+w        移动到下一个单词的开头
+W        移动到下一个词组的开头
+e        移动到下一个单词的结尾
+E	 移动到下一个词组的结尾
+b	 移动到前一个单词的开头
+B	 移动到前一个词组的开头
+ge	 移动到前一个单词的结尾
+gE	 移动到前一个词组的结尾
+0	 跳到本行第一个字符
+^	 跳到本行第一个非空字符
+g_       跳到本行最后一个非空字符
+$	 跳到本行最后一个字符
+n|       跳到本行第n列
+(太多了后略
+滚动
+Ctrl-e/y d/u f/b 下/上滚动一行/半屏/一屏
+zt 当前位置置于屏幕顶部
+zz 当前位置置于重要
+zb 置于底部
+搜索
+/ 向后搜索
+？向前搜索
+n 重复上次搜索
+N 重复上次的反向搜索
+标记
+ma 用a标记当前位置
+`a 回溯行列  'a 回行
+:mark 查看更多

@@ -1,0 +1,108 @@
+退出文件 :q
+退出vim :qa!
+Jump to a subject:  Position the cursor on a tag (e.g. bars) and hit CTRL-].
+   With the mouse:  ":set mouse=a" to enable the mouse (in xterm or GUI).
+                    Double-click the left mouse button on a tag, e.g. bars.
+        Jump back:  Type CTRL-O.  Repeat to go further back.
+帮助 :h  :help
+                      Normal mode command                  :help x
+                      Visual mode command         v_       :help v_u
+                      Insert mode command         i_       :help i_<Esc>
+                      Command-line command        :        :help :quit
+                      Command-line editing        c_       :help c_<Del>
+                      Vim command argument        -        :help -r
+                      Option                      '        :help 'textwidth'
+                      Regular expression          /        :help /[
+保存 :w
+
+参考：Learn-Vim
+0-1 寻找vimrc
+/etc/vim/vimrc   vimrc类似配置文件
+启用nocompatible： 添加set nocompatible
+（权限只读 没有修改成功
+
+1 vim命令-------------------------------------------------------
+想要查询退出vim的方法可以  :h write-quit   #:help {命令}(:h是简写)进入相关命令的帮助文档
+
+打开终端键入 vim 进入 vim
+在终端打开文件 vim <filename>
+一次打开多个文件 vim <filename1> <filename2> <filename3> 
+输入 i 进入插入模式 Esc退出插入模式切回普通模式
+:quit/:q 退出文档  :q! 强制退出
+:write/:w 保存旧文件的修改  :write/:w <filename> 保存新文件的修改
+:wq 保存并退出
+:s/xxx/yyy/g yyy替换xxx
+
+#需要更新vim
+sudo add-apt-repository ppa:jonathonf/vim #添加安装源
+sudo apt update #查询需升级的安装包
+sudo apt install vim #升级vim相关软件包
+
+#再接0-1
+#再次查询.vimrc位置
+参考vim --version提示
+系统 vimrc 文件: "$VIM/vimrc"
+     用户 vimrc 文件: "$HOME/.vimrc"
+ 第二用户 vimrc 文件: "~/.vim/vimrc"
+      用户 exrc 文件: "$HOME/.exrc"
+       defaults 文件: "$VIMRUNTIME/defaults.vim"
+         $VIM 预设值: "/usr/share/vim"
+
+原来第一次修改vimrc是找错了文件！
+
+参考：https://zhuanlan.zhihu.com/p/154383194 查找用户vimrc
+打开终端：
+vim #进入vim
+:echo $VIM #查询vim安装位置 /usr/share/vim
+#则系统vimrc文件位置：/usr/share/vim/vimrc
+:echo $HOME    /home/dxs
+:echo $VIMRC   查询依然找不到.vimrc
+:scriptnames 查询所有vim文件 没有.vimrc
+参考 http://t.csdn.cn/M6MGS 用户.vimrc需要自行创建
+创建文件后:echo $MYVIMRC 查询到对应位置
+编辑.vimrc文件，设置生效～～
+
+#0-1 end
+
+# 气死！！后面写的忘记保存！！！
+# 看来用vim还是不熟练TT
+
+由终端打开多个文件 vim -o?/-O? <file1> <file2> ...
+
+将ls命令的输出重定向到Vim中编辑，命令是ls -l | vim -
+
+查看更多命令 man vim / :help
+
+
+2 Buffers Windows Tabs-------------------------------------------
+
+Buffer是一块真实存在的内存空间
+:buffers/:ls/:files  查看所有buffers
+:bnext :buffer+<filename> :buffer+n  Ctrl+O Ctrl+I Ctrl+^ 切换buffer
+:bdelete+n :bdelete+<filename> 从buffers列表中删除
+:qall :qall! :wqall 退出Vim
+
+Window是buffer上的一个视口
+在打开一个文件的前提下:split file2.txt 则打开了两个窗口
+Ctrl-W H    移动光标到左边的窗口
+Ctrl-W J    移动光标到下面的窗口
+Ctrl-W K    移动光标到上面的窗口
+Ctrl-W L    移动光标到右边的窗口
+Ctrl-W V    打开一个新的垂直分割的窗口
+Ctrl-W S    打开一个新的水平分割的窗口
+Ctrl-W C    关闭一个窗口
+Ctrl-W O    除了当前窗口，关闭所有其他的窗口
+:vsplit filename    垂直分割当前窗口，并在新窗口中打开名为filename的文件。
+:split filename     水平分割当前窗口，并在新窗口中打开名为filename的文件。
+:new filename       创建一个新窗口并打开名为filename的文件。
+
+:buffer <filename> 多个窗口显示同一个buffer
+
+Tab是windows的集合，类似窗口的布局
+:tabnew file.txt    在tab中打开一个文件
+:tabclose           关闭当前tab
+:tabnext            切换至下一个tab
+:tabprevious        切换至前一个tab
+:tablast            切换至最后一个tab
+:tabfirst           切换至第一个tab
+gt                  切换到下一个标签页

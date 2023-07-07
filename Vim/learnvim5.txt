@@ -1,0 +1,109 @@
+21 多文件操作
+
+参数列表 argdo
+:args file1 file2 file 3 *.xx **/*.xx
+:argdo [command] e.g. :argdo %s/xxx/yyy/g | update
+:arga file4 file5
+:argdo update
+
+缓冲区列表 buffers
+:buffers
+:bnext  :bprev  :bfirst  :blast
+:ball  :vertial ball
+:bufdo xxx update
+
+窗口&Tab列表
+:windo :tabdo
+
+快速修复列表
+:vimgrep  :grep :cp/:cn 跳转上/下一个匹配  :copen 打开Quickfix
+:copen :cclose :cfirst :clast
+:cdo :s/:! 作用域是list元素 
+:cfdo :%s/:g 作用域是全局文件
+
+位置列表
+:lvimgrep   :lvim /pattern/ path
+:lxxx
+
+
+22 vimrc
+
+插件、Plug 'xxx'
+设置、set xxx
+自定义函数、Vimscript
+自定义命令、:command! xxx xxxx
+键盘映射、nnoremap <>xx:xx<>
+
+分解.vimrc
+source $HOME/.vim/settings/plugins.vim
+source $HOME/.vim/settings/configs.vim
+source $HOME/.vim/settings/functions.vim
+source $HOME/.vim/settings/mappings.vim
+
+分区.vimrc
+" setup folds {{{
+xxx
+" }}}
+
+启动vim不加载vimrc和插件  vim -u NONE
+不加载vimrc加载插件  vim -u NORC
+加载vimrc不加载插件  vim --noplugin
+加载其他vimrc   vim -u xxx/xxx
+
+
+23 软件包
+
+24 Vim Runtime
+
+~/.vim/plugin/:xxx.vim vim初始化脚本
+
+文件类型检测 .vimrc:  filetype plugin indent on
+./.vim/ftdetect/xxx.vim:autocmd BufNewFile,BufRead *.xxx set filetype=xxx
+再次打开vim后，自定义xxx文件成功:set filetype?
+xxx.vim只运行一次：
+if exists("did_load_filetypes")
+  finish
+endif
+
+augroup donutfiletypedetection
+  autocmd! BufRead,BufNewFile *.xxx setfiletype xxx
+augroup END
+
+基于文件内容检测文件类型
+未知类型文件运行：~/.vim/scripts.vim
+if did_filetype()
+  finish
+endif
+
+if /e.g./ getline(1) =~ '^\\<donutify\\>'
+  setfiletype donut
+endif
+
+文件类型插件 只有打开xxx类型文件时运行相关脚本：
+~/.vim/ftplugin/xxx.vim
+echo "Calling from xxx ftplugin"
+发现每运行一次xxx文件，ftplugin内的脚本运行一次。
+
+自定义语法高亮
+~/.vim/syntax/ xxx.vim
+syntax keyword xxxKeyword xxx
+highlight link xxxKeyword Keyword
+//:h syntax.txt
+//plug:vim-polyglot
+
+自定义插件help文档
+~/.vim/doc/xxx.txt
+:helptags ~/.vim/doc/
+:h xxx
+
+手动加载脚本
+~/.vim/autoload/xxx.vim
+```
+echo "xxx"
+
+function fileName#function()
+  ...
+endfunction
+```
+显式调用:call fileName#function()
+

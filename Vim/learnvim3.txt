@@ -1,0 +1,100 @@
+6 输入模式
+
+i/I/a/A/o/O/s/S/gi/gI 进入输入模式
+Ctrl-o 10i123退出输入模式后重复10遍xxx
+Ctrl-o !! 执行终端命令
+
+7 点命令
+
+. 重复上一个修改操作 cw...
+不能是命令行修改，verb+noun!!
+(e.g....
+
+8 寄存器
+匿名寄存器（""）.
+编号寄存器("0-9).
+小删除寄存器 ("-).
+命名寄存器 ("a-z).
+只读寄存器 (":, "., and "%).
+Buffer交替文件寄存器 ("#).
+表达式寄存器 ("=).
+选取和拖放寄存器("* and "+).
+黑洞寄存器 ("_).
+搜索模式寄存器 ("/).
+y c d p ~~
+:register 查看所有寄存器
+:register <name> 查看指定寄存器
+
+9 宏命令
+
+qa                     开始记录动作到寄存器 a
+q (while recording)    停止记录
+@a                     调用宏命令
+使用一个已知寄存器的大写字母来想该寄存器中添加内容
+通过 :put a 调用一个已经录制好的宏命令..?
+:let @z = @a 将寄存器"a" 中的命令拷贝到寄存器"z"
+
+10 撤销
+
+u/:undo/:u 撤销最近一次
+U  撤销最近所有
+断点 <Ctrl-G u>
+g+ g- 撤销树
+保存撤销记录 :wundo <filename>
+:undolist
+:earlier <time>
+:later <time>
+
+11 可视模式
+
+修改高亮部分状态;
+v-逐字 V-逐行 Ctrl-v-逐块;
+gv-转到上一个可视模式;
+o/O-保持已选择区域向上拓展
+:h visual-operators
+
+e.g.
+将光标放在第一行上：
+进入逐块可视模式，并向下两行(Ctrl-V jj)。
+高亮显示到行尾($)。
+按(A) ，然后键入";"。
+退出可视模式(esc)。
+
+Ctrl-V进入可视块选择目标 Ctrl-A/X字母/数字递增
+
+选择模式 gh/gH/gCtrl-h
+类常规文本编辑 选中、替换
+
+12 搜索和替换
+/搜索下 ^ $表示一行开始/结尾
+重复搜索 //xxx
+最近搜索/+up/down|Ctrl-N/Ctrl-p  :history /
+候选词搜索 /xxx\|yyy  ：/\vxxx|yyy :h\v
+匹配开始和结束 /xxx\zs?\zeyyy
+搜索范围字符组 /[0-9] /[a-z]
+搜索重复字符 e.g.2-4位数字 /[0-9]\{2,4\}
+字符组预定义 :h /character-classes
+查询""内字符：/"[^"]\+" [^"]指非"字符 \+指一个或多个
+
+替换 :s/{old-pattern}/{new-pattern}/
+重复替换 :s...+&
+范围替换 :[range]s/old/new/
+模式替换 e.g. 数字周围加双引号 :%s/\d/"\0"/  :%s/\d/"&"/
+全局替换 :s/old/new/g
+候选 :%s/\v(xxx|yyy) ?)/zzz ppp/g
+匹配两部分 一部分不变二部分替换 :%s/old1 old2/\1 \yyy\2/
+匹配开始和结束 :%s/?\zsxxx/yyy/h
+非贪婪匹配 {n}匹配第n个 {-}匹配最短的 
+:args 查询多个匹配文件
+:argdo %s... 跨文件替换
+:argdo update
+用宏跨文件提换:
+:args *.txt
+qq
+:%s/dog/chicken/g
+:wnext
+q
+99@q
+
+
+
